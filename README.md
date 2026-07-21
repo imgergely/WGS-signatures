@@ -1,9 +1,5 @@
-# STAR Protocols — WGS mutational-signature analysis
+# WGS mutational-signature analysis
 
-Post-IsoMut analysis for the bioinformatics section of the STAR Protocols manuscript
-(Imre & Juhász): filter the IsoMut SNV calls against the ENCODE blacklist, build SBS96
-spectra, compare each clone to the SIGNAL and COSMIC catalogues, and generate Figure 2
-and Figure S1.
 
 ## Repository contents
 
