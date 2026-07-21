@@ -1,0 +1,25 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python
+__pycache__/
+*.pyc
+
+# pipeline inputs / outputs and large data (not tracked)
+results/
+qc/
+isomut_output/
+bams/
+reference/
+input/
+*.isomut
+*.bam
+*.bam.bai
+*.fa
+*.fa.gz
+
+# OS
+.DS_Store
+Thumbs.db
