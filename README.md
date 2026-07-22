@@ -1,4 +1,4 @@
-# WGS mutational-signature analysis
+# WGS mutational signature analysis
 
 
 ## Repository contents
@@ -41,6 +41,10 @@ The versions used for the protocol were:
 - RColorBrewer 1.1-3
 
 The deposited IsoMut configuration uses the legacy Python 2 wrapper distributed with IsoMut.
+
+## Tested operating environment
+
+The computational workflow was executed on **Ubuntu 22.04.5 LTS (Jammy Jellyfish)** using the **x86_64** architecture. Other operating systems were not tested.
 
 ## Inputs not included in this repository
 
