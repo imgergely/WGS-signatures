@@ -7,7 +7,8 @@
 |---|---|
 | `run_samtools_qc.sh` | Runs per-clone `samtools flagstat` and `samtools coverage`, and calculates the reference-span-weighted mean depth used in Table S2 |
 | `isomut_config.py` | Python 2.7 configuration for the joint IsoMut call across the 42 analyzed clones |
-| `wgs_signature_pipeline.R` | Implements:  cohort validation, blacklist filtering, SBS96 analysis, reference comparison, and output generation |
+| `wgs_signature_pipeline.R` | Implements cohort validation, blacklist filtering, SBS96 analysis, reference comparison, and output generation |
+| `input/all_SNVs.isomut.gz` | Joint IsoMut SNV call set used as input for the reported downstream R analysis |
 | `Table_S1_clone_key.csv` | Mapping between protocol names, original clone IDs, ENA BioSample accessions, and data availability |
 | `Table_S2_perclone_QC.csv` | Per-clone sequencing QC metrics |
 | `Table_S3_mutation_counts.csv` | Per-clone SNV counts before and after ENCODE blacklist filtering |
@@ -40,6 +41,13 @@ The BAM and reference files are not included in the repository.
 
 ## Workflow
 
+Two entry points are supported:
+
+- **Reproduce the reported downstream analysis:** use the supplied `input/all_SNVs.isomut.gz` and begin at step 4.
+- **Analyze newly generated BAM files end to end:** complete steps 1–4.
+
+The supplied scripts are configured for the 42-clone study panel. Analysis of a different sample panel requires corresponding updates to `Table_S1_clone_key.csv`, the IsoMut exclusion settings, the expected group composition, and the prespecified reference signatures.
+
 ### 1. Run per-clone SAMtools QC
 
 From the repository root:
@@ -49,7 +57,7 @@ chmod +x run_samtools_qc.sh
 ./run_samtools_qc.sh
 ```
 
-The script writes one `flagstat` and one `coverage` file per BAM under `qc/`, plus `qc/mean_depth_summary.tsv`. 
+The script writes one `flagstat` and one `coverage` file per BAM under `qc/`, plus `qc/mean_depth_summary.tsv`.
 
 ### 2. Index the reference and BAM files
 
@@ -77,7 +85,7 @@ python2 isomut_config.py
 
 All 42 analyzed clones must be processed in one execution. IsoMut identifies clone-specific variants by comparing each clone with the complete panel; changing the panel changes which variants are retained as clone-specific.
 
-The downstream analysis uses the SNV output only. Compress the validated table and place it at `input/all_SNVs.isomut.gz`.
+The downstream analysis uses the SNV output only. The repository already contains the study call set at `input/all_SNVs.isomut.gz`. When analyzing newly generated BAM files, replace this file with the validated compressed SNV output from the new joint IsoMut call.
 
 ### 4. Run the complete downstream R analysis
 
@@ -136,4 +144,4 @@ The computational workflow was executed on Ubuntu 22.04.5 LTS using the x86_64 a
 
 ## Data availability
 
-Sequencing reads for the publicly deposited subset are available in the European Nucleotide Archive under accession **PRJEB102539**. Table S1 records the availability of every clone. Sequencing data for additional clones are available from the lead contact upon request.
+The joint IsoMut SNV call set used for the reported downstream R analysis is available at `input/all_SNVs.isomut.gz`. Sequencing reads for the publicly deposited subset are available in the European Nucleotide Archive under accession **PRJEB102539**. Table S1 records the availability of every clone. Sequencing data for additional clones are available from the lead contact upon request.
