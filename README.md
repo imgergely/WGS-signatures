@@ -39,14 +39,51 @@
 
 The BAM and reference files are not included in the repository.
 
+## External reference files
+
+Create the reference directory before running the workflow:
+
+```bash
+mkdir -p reference
+```
+
+### Reproducing the reported downstream R analysis
+
+The ENCODE hg38 blacklist v2 file must be downloaded manually:
+
+```bash
+wget -O reference/hg38-blacklist.v2.bed.gz \
+  https://raw.githubusercontent.com/Boyle-Lab/Blacklist/master/lists/hg38-blacklist.v2.bed.gz
+```
+
+### Running the complete workflow from BAM files
+
+The IsoMut workflow additionally requires the UCSC hg38 analysis set FASTA:
+
+```bash
+wget -O reference/hg38.analysisSet.fa.gz \
+  https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/analysisSet/hg38.analysisSet.fa.gz
+
+gunzip reference/hg38.analysisSet.fa.gz
+samtools faidx reference/hg38.analysisSet.fa
+```
+
+These commands create the filenames expected by `isomut_config.py`:
+
+```text
+reference/hg38.analysisSet.fa
+reference/hg38.analysisSet.fa.fai
+reference/hg38-blacklist.v2.bed.gz
+```
+
 ## Workflow
 
 Two entry points are supported:
 
-- **Reproduce the reported downstream analysis:** use the supplied `input/all_SNVs.isomut.gz` and begin at step 4.
-- **Analyze newly generated BAM files end to end:** complete steps 1–4.
+- **Reproduce the reported downstream analysis:** download the hg38 blacklist as described above, use the supplied `input/all_SNVs.isomut.gz`, and begin at step 4.
+- **Analyze newly generated BAM files end to end:** complete steps 1-4.
 
-The supplied scripts are configured for the 42-clone study panel. Analysis of a different sample panel requires corresponding updates to `Table_S1_clone_key.csv`, the IsoMut exclusion settings, the expected group composition, and the prespecified reference signatures.
+The supplied scripts are configured for the 42 clone study panel. Analysis of a different sample panel requires corresponding updates to `Table_S1_clone_key.csv`, the IsoMut exclusion settings, the expected group composition, and the prespecified reference signatures.
 
 ### 1. Run per-clone SAMtools QC
 
